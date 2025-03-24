@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ScannerStepForm from '../components/ScannerStepForm';
 import BuyStep from '../components/BuyStep';
-import Navbar from '../components/NavBar';
+import Navbar from '../components/Navbar';
 import { Instrument } from '../types/strategy';
 
 const CreateStrategy: React.FC = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { instruments } from '../hooks/instrument.hooks';
-import Navbar from '../components/NavBar';
+import Navbar from '../components/Navbar';
 import InstrumentComponent from '../components/InstrumentComponent';
 
 const InstrumentPage: React.FC = () => {
