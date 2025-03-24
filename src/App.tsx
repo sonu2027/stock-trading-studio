@@ -7,7 +7,7 @@ const App: React.FC = () => (
   <Router>
     <Routes>
       {/* <Route path="/" element={<StrategyList />} /> */}
-      <Route path="/createstrategy" element={<CreateStrategy />} />
+      <Route path="/" element={<CreateStrategy />} />
       <Route path="/instruments" element={<InstrumentPage />} />
     </Routes>
   </Router>

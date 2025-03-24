@@ -1,12 +1,4 @@
-interface Instrument {
-    id: string;
-    exchange: string;
-    instrumentType: string;
-    priceGrowth: number; // Price growth over the last 300 days (%)
-    price: number; // Current price
-    marketCapRank: number; // Rank by market cap (e.g., top 10% = 10)
-    avgDailyTransactionValue: number; // Average daily transaction value over 90 days
-}
+import { Instrument } from "../types/strategy";
 
 const instruments: Instrument[] = [
     {

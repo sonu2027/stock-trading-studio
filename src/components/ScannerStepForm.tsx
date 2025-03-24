@@ -1,41 +1,33 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setJob } from '../store/saveJobSlice';
+import { setScanner } from '../store/savedScannerSlice';
+import { nanoid } from '@reduxjs/toolkit';
+import { instruments } from '../hooks/instrument.hooks';
+import { Instrument } from '../types/strategy';
 
 interface ScannerStepFormProps {
-  onSubmit: (data: {
-    exchange: string;
-    instrumentType: string;
-    priceGrowth: number;
-    priceThreshold: number;
-    marketCapRank: number;
-    transactionValue: number;
-  }) => void;
+  saved: boolean;
+  setSaved: (value: boolean) => void;
+  setShowFilteredInstrument: (value: boolean) => void;
+  setFilteredInstruments: (value: Instrument[]) => void;
 }
 
-const ScannerStepForm: React.FC<ScannerStepFormProps> = ({ onSubmit }) => {
+const ScannerStepForm: React.FC<ScannerStepFormProps> = ({ saved, setSaved, setFilteredInstruments, setShowFilteredInstrument }) => {
 
-  const [exchange, setExchange] = useState('');
-  const [instrumentType, setInstrumentType] = useState('');
+  const [exchange, setExchange] = useState('NSE');
+  const [instrumentType, setInstrumentType] = useState('EQUITY');
   const [priceGrowth, setPriceGrowth] = useState(0);
   const [priceThreshold, setPriceThreshold] = useState(0);
   const [marketCapRank, setMarketCapRank] = useState(0);
   const [transactionValue, setTransactionValue] = useState(0);
 
   const dispatch = useDispatch()
+  const id = nanoid()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({
-      exchange,
-      instrumentType,
-      priceGrowth,
-      priceThreshold,
-      marketCapRank,
-      transactionValue,
-    });
-
-    dispatch(setJob({
+    dispatch(setScanner({
+      id,
       exchange,
       instrumentType,
       priceGrowth,
@@ -44,12 +36,24 @@ const ScannerStepForm: React.FC<ScannerStepFormProps> = ({ onSubmit }) => {
       transactionValue,
     }))
 
+    setSaved(true)
+
+    let tempFilteredInstruments: Instrument[] = instruments.filter((e) => (e.exchange === exchange && e.instrumentType === instrumentType && e.price >= priceThreshold && e.priceGrowth >= priceGrowth)
+    )
+
+    setFilteredInstruments(tempFilteredInstruments)
+
+    setTimeout(()=>{
+      setShowFilteredInstrument(true)
+    }, 1200)
+
   };
 
 
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className={`max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg border border-gray-200 transition-all duration-1000 ease-in-out transform ${!saved ? 'translate-x-0 opacity-100 max-h-[1000px]' : '-translate-x-full opacity-0 h-0'}`}
+    >
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Scanner Step Configuration</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -79,7 +83,14 @@ const ScannerStepForm: React.FC<ScannerStepFormProps> = ({ onSubmit }) => {
           <input
             type="number"
             value={priceGrowth}
-            onChange={(e) => setPriceGrowth(Number(e.target.value))}
+            onChange={(e) => {
+              let trimmedValue = e.target.value.replace(/^0+/, '');
+              if (trimmedValue === '') {
+                trimmedValue = '0';
+              }
+              setPriceGrowth(Number(trimmedValue));
+              e.target.value = trimmedValue;
+            }}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
@@ -89,7 +100,14 @@ const ScannerStepForm: React.FC<ScannerStepFormProps> = ({ onSubmit }) => {
           <input
             type="number"
             value={priceThreshold}
-            onChange={(e) => setPriceThreshold(Number(e.target.value))}
+            onChange={(e) => {
+              let trimmedValue = e.target.value.replace(/^0+/, '');
+              if (trimmedValue === '') {
+                trimmedValue = '0';
+              }
+              setPriceThreshold(Number(trimmedValue));
+              e.target.value = trimmedValue;
+            }}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
@@ -99,7 +117,14 @@ const ScannerStepForm: React.FC<ScannerStepFormProps> = ({ onSubmit }) => {
           <input
             type="number"
             value={marketCapRank}
-            onChange={(e) => setMarketCapRank(Number(e.target.value))}
+            onChange={(e) => {
+              let trimmedValue = e.target.value.replace(/^0+/, '');
+              if (trimmedValue === '') {
+                trimmedValue = '0';
+              }
+              setMarketCapRank(Number(trimmedValue));
+              e.target.value = trimmedValue;
+            }}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
@@ -109,13 +134,21 @@ const ScannerStepForm: React.FC<ScannerStepFormProps> = ({ onSubmit }) => {
           <input
             type="number"
             value={transactionValue}
-            onChange={(e) => setTransactionValue(Number(e.target.value))}
+            onChange={(e) => {
+              let trimmedValue = e.target.value.replace(/^0+/, '');
+              if (trimmedValue === '') {
+                trimmedValue = '0';
+              }
+              setTransactionValue(Number(trimmedValue));
+              e.target.value = trimmedValue;
+            }}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
         <div className="flex justify-end">
           <button
+            onClick={() => setSaved(false)}
             type="submit"
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >

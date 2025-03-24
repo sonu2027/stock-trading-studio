@@ -1,48 +1,23 @@
-// import { configureStore } from "@reduxjs/toolkit";
-// import { persistStore, persistReducer } from "redux-persist";
-// import storage from "redux-persist/lib/storage";
-// import { combineReducers } from "redux";
-// import { setJob } from "./saveJobSlice";
-
-// const rootReducer = combineReducers({
-//     job: setJob,
-// });
-
-// const persistConfig = {
-//     key: "root",
-//     storage,
-// };
-
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-// const store = configureStore({
-//     reducer: persistedReducer,
-// });
-
-// const persistor = persistStore(store);
-
-// export { store, persistor };
-
 import { configureStore } from "@reduxjs/toolkit";
-import { persistStore, persistReducer, PersistConfig } from "redux-persist";
-import storage from "redux-persist/lib/storage"; 
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
-import saveJobReducer from "./saveJobSlice"; 
-
-interface RootState {
-    job: ReturnType<typeof saveJobReducer>;
-}
+import saveScannerReducer from "./savedScannerSlice";
+import purchaseReducer from "./purchaseInstrumentSlice";
 
 const rootReducer = combineReducers({
-    job: saveJobReducer, 
+    savedScanner: saveScannerReducer,
+    purchasedInstrument: purchaseReducer
 });
 
-const persistConfig: PersistConfig<RootState> = {
+const persistConfig = {
     key: "root",
     storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export type RootState = ReturnType<typeof rootReducer>;
 
 const store = configureStore({
     reducer: persistedReducer,
