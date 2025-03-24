@@ -9,13 +9,13 @@ const Navbar: React.FC = () => {
     };
 
     return (
-        <nav className="bg-white shadow-md">
+        <nav className="bg-white shadow-md sticky top-0 z-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
                     <div className="flex-shrink-0 flex items-center">
-                        <a href="/" className="text-xl font-bold text-gray-800">
-                            MyLogo
-                        </a>
+                        <Link to="/" className="text-xl font-bold text-blue-600">
+                            STOCK TRADING STUDIO
+                        </Link>
                     </div>
 
                     <div className="flex items-center sm:hidden">
@@ -66,12 +66,12 @@ const Navbar: React.FC = () => {
                         <Link to="/instruments" className="text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
                             Instruments
                         </Link>
-                        <Link to="/savedscanner" className="text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
+                        <Link to="/savedscannerstep" className="text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
                             Saved Scanner
                         </Link>
-                        <a href="/contact" className="text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-                            Contact
-                        </a>
+                        <Link to="/portfolio" className="text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
+                            Portfolio
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -84,12 +84,12 @@ const Navbar: React.FC = () => {
                     <Link to="/instruments" className="block text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">
                         Instruments
                     </Link>
-                    <Link to="/savedscanner" className="block text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">
+                    <Link to="/savedscannerstep" className="block text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">
                         Saved Scanner
                     </Link>
-                    <a href="/contact" className="block text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">
-                        Contact
-                    </a>
+                    <Link to="/portfolio" className="block text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">
+                        Portfolio
+                    </Link>
                 </div>
             </div>
         </nav>

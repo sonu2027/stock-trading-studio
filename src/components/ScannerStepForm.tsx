@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setScanner } from '../store/savedScannerSlice';
 import { nanoid } from '@reduxjs/toolkit';
 import { instruments } from '../hooks/instrument.hooks';
-import { Instrument } from '../types/strategy';
+import { Instrument, ScannerStep } from '../types/strategy';
+import { deleteScanner } from '../store/savedScannerSlice';
 
 interface ScannerStepFormProps {
   saved: boolean;
   setSaved: (value: boolean) => void;
   setShowFilteredInstrument: (value: boolean) => void;
   setFilteredInstruments: (value: Instrument[]) => void;
+  scannerData?: ScannerStep;
 }
 
-const ScannerStepForm: React.FC<ScannerStepFormProps> = ({ saved, setSaved, setFilteredInstruments, setShowFilteredInstrument }) => {
+const ScannerStepForm: React.FC<ScannerStepFormProps> = ({ saved, setSaved, setFilteredInstruments, setShowFilteredInstrument, scannerData }) => {
 
   const [exchange, setExchange] = useState('NSE');
   const [instrumentType, setInstrumentType] = useState('EQUITY');
@@ -22,10 +24,19 @@ const ScannerStepForm: React.FC<ScannerStepFormProps> = ({ saved, setSaved, setF
   const [transactionValue, setTransactionValue] = useState(0);
 
   const dispatch = useDispatch()
-  const id = nanoid()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    let id = ''
+    if (scannerData?.id) {
+      id = scannerData.id
+
+      dispatch(deleteScanner(id))
+    }
+    else {
+      id = nanoid()
+    }
     dispatch(setScanner({
       id,
       exchange,
@@ -43,11 +54,22 @@ const ScannerStepForm: React.FC<ScannerStepFormProps> = ({ saved, setSaved, setF
 
     setFilteredInstruments(tempFilteredInstruments)
 
-    setTimeout(()=>{
+    setTimeout(() => {
       setShowFilteredInstrument(true)
     }, 1200)
 
   };
+
+  useEffect(() => {
+    if (scannerData?.id) {
+      setExchange(scannerData.exchange)
+      setInstrumentType(scannerData.instrumentType)
+      setPriceGrowth(scannerData.priceGrowth)
+      setPriceThreshold(scannerData.priceThreshold)
+      setMarketCapRank(scannerData.marketCapRank)
+      setTransactionValue(scannerData.transactionValue)
+    }
+  }, [])
 
 
 
