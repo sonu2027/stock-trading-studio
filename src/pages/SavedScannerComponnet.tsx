@@ -20,6 +20,7 @@ function SavedScannerComponent() {
         marketCapRank: 0,
         transactionValue: 0
     })
+    const [scannerId, setScannerId] = useState<string>('')
 
     const [saved, setSaved] = useState<boolean>(false);
     const [filteredInstruments, setFilteredInstruments] = useState<Instrument[]>([]);
@@ -39,7 +40,7 @@ function SavedScannerComponent() {
                     <ScannerStep setShowScannerStep={setShowScannerStep} savedScannerSteps={savedScannerSteps} setScannerData={setScannerData} />
                     :
                     <div className="my-8">
-                        <ScannerStepForm scannerData={scannerData} saved={saved} setSaved={setSaved} setFilteredInstruments={setFilteredInstruments} setShowFilteredInstrument={setShowFilteredInstrument} />
+                        <ScannerStepForm scannerData={scannerData} saved={saved} setSaved={setSaved} setFilteredInstruments={setFilteredInstruments} setShowFilteredInstrument={setShowFilteredInstrument} setScannerId={setScannerId} />
                     </div>
             }
             {
@@ -47,7 +48,7 @@ function SavedScannerComponent() {
                 <div>
                     <IoIosArrowRoundBack onClick={() => gotoBack()} className="relative z-10 text-4xl ml-10 mb-4 hover:cursor-pointer hover:animate-ping" />
                     <div className='flex justify-center items-center'>
-                        <BuyStep filteredInstruments={filteredInstruments} setFilteredInstruments={setFilteredInstruments} saved={saved} setSaved={setSaved} />
+                        <BuyStep filteredInstruments={filteredInstruments} setFilteredInstruments={setFilteredInstruments} saved={saved} setSaved={setSaved} scannerId={scannerId} />
                     </div>
                 </div>
             }

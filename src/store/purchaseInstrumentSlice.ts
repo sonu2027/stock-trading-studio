@@ -1,26 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// Define the initial state type
 interface InstrumentState {
-  data: string[]; // Ensuring `data` only holds strings
+  data: string[];
 }
 
-// Initial state
 const initialState: InstrumentState = {
   data: [],
 };
 
-// Create the slice
 const purchaseInstrumentSlice = createSlice({
   name: "instrumentSlice",
   initialState,
   reducers: {
     setInstrument: (state, action: PayloadAction<string>) => {
-      state.data.push(action.payload); // Ensures only strings are added
+      state.data.push(action.payload);
     },
+    deleteInstrument: (state, action: PayloadAction<string>) => {
+      state.data = state.data.filter((e) => e != action.payload)
+    }
   },
 });
 
-// Export actions and reducer
-export const { setInstrument } = purchaseInstrumentSlice.actions;
+export const { setInstrument, deleteInstrument } = purchaseInstrumentSlice.actions;
 export default purchaseInstrumentSlice.reducer;

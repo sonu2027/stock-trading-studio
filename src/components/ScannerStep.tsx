@@ -38,7 +38,7 @@ const ScannerStep: React.FC<ScannerStepProps> = ({ savedScannerSteps, setShowSca
 
     return (
         <div className="p-6 max-w-6xl mx-auto">
-            <h1 className="text-3xl font-bold text-gray-800 mb-8">Saved Scanner Steps</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">Saved Scanner</h1>
 
             {savedScannerSteps.length === 0 ? (
                 <div className="text-center py-12">
@@ -88,7 +88,7 @@ const ScannerStep: React.FC<ScannerStepProps> = ({ savedScannerSteps, setShowSca
                                 <div className="mt-6 flex justify-end space-x-2">
                                     <button onClick={() => handleCopy(step)} className="px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors flex items-center gap-1">{copy}</button>
                                     <button onClick={() => handleEdit(step)} className="px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-                                        Edit
+                                        View
                                     </button>
                                     <button onClick={() => handleDelete(step.id)} className="px-3 py-1 text-sm bg-red-100 text-red-600 rounded-md hover:bg-red-200 transition-colors">
                                         Delete

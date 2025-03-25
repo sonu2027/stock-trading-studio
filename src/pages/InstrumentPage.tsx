@@ -1,5 +1,5 @@
 import React from 'react';
-import { instruments } from '../hooks/instrument.hooks';
+import { instruments } from '../utils/instrument.utils';
 import Navbar from '../components/Navbar';
 import InstrumentComponent from '../components/InstrumentComponent';
 

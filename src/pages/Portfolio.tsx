@@ -1,6 +1,12 @@
+import Navbar from "../components/Navbar"
+import PurchasedInstrument from "../components/PurchasedInstrument"
+
 function Portfolio() {
   return (
-    <div>Portfolio</div>
+    <div>
+      <Navbar />
+      <PurchasedInstrument />
+    </div>
   )
 }
 
